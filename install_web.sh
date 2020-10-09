@@ -9,7 +9,7 @@ echo "Install console benefits"
 apt install -y curl wget gcc g++ make bash-completion net-tools easy-rsa git mc htop ngrep tcpdump rsync mtr ipset lm-sensors libmemcached-dev gnupg2 ca-certificates lsb-release python-software-properties
 
 echo "Install nginx"
-echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list; apt update; apt install nginx-full
+echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list; apt update; apt install -y nginx
 
 echo "Install apache"
 apt install -y apache2
