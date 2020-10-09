@@ -8,8 +8,21 @@ fi
 echo "Install console benefits"
 apt install -y curl wget gcc g++ make bash-completion net-tools htop ngrep tcpdump mtr ipset easy-rsa git mc rsync lm-sensors libmemcached-dev gnupg2 ca-certificates lsb-release python-software-properties
 
+echo "Set console colors"
+sed -i '/PS1/d' /root/.bash_profile
+if [[ -z $(grep 'EDITOR=mcedit' /root/.bash_profile) ]]; then 
+	echo "export PS1='\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\H \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >> /root/.bash_profile
+	echo "eval \"`dircolors`\"" >> /root/.bash_profile
+	echo "export EDITOR=mcedit" >> /root/.bash_profile
+	echo "export LS_OPTIONS='--color=auto -h'" >> /root/.bash_profile
+fi
+
 echo "Install nginx"
 echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list; apt update; apt install -y nginx
+if [[ -z $(grep 'web' /etc/nginx/nginx.conf) ]]; then 
+	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+	echo "include /home/*/web/*/conf/nginx*.conf;" >> /etc/nginx/nginx.conf;
+fi
 
 echo "Install apache"
 apt install -y apache2
