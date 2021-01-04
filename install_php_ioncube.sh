@@ -10,7 +10,7 @@ phpver=$(php -i | grep 'PHP Version' | head -n 1 | awk '{print $4}')
 phpver=${phpver%.*}
 
 if [ ! -f "/var/lib/ioncube/ioncube_loader_lin_${phpver}.so" ]; then
-  echo "Requested version not found"
+  echo "Requested version $phpver not found"
   exit 1;
 fi
 
