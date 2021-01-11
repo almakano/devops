@@ -31,7 +31,7 @@ sed 's/^/add whitelist_ip4 /' /etc/ipset/whitelist*.txt >> /etc/ipset/rules
 echo "create blacklist_ip4 hash:net family inet hashsize 4096 maxelem 800000" >> /etc/ipset/rules
 sed 's/^/add blacklist_ip4 /' /etc/ipset/blacklist*.txt >> /etc/ipset/rules
 
-ipset restore -! < /etc/ipset/rules
+ipset -! restore < /etc/ipset/rules
 iptables-restore < /etc/iptables/rules
 
 if [ -z "$(grep -iRI 'whitelist_ip4' /etc/iptables/rules)" ]; then 
