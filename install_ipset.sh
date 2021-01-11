@@ -21,7 +21,10 @@ if [ -z "$(grep -iRI 'exit 0' /etc/rc.local)" ]; then
     echo "exit 0" >> /etc/rc.local
 fi
 
-iptables-save | grep '/32 -j REJECT' | awk '{print $4}' | sort >> /etc/ipset/blacklist_auth.txt
+iptables-save | grep '/32 -j REJECT' | awk '{print $4}' | sort | uniq >> /etc/ipset/blacklist_auth.txt
+sort -u /etc/ipset/blacklist_auth.txt > /etc/ipset/blacklist_auth2.txt
+rm /etc/ipset/blacklist_auth.txt
+mv /etc/ipset/blacklist_auth2.txt /etc/ipset/blacklist_auth.txt
 
 echo "create whitelist_ip4 hash:net family inet hashsize 4096 maxelem 800000" > /etc/ipset/rules
 sed 's/^/add whitelist_ip4 /' /etc/ipset/whitelist*.txt >> /etc/ipset/rules
