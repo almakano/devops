@@ -22,7 +22,7 @@ if [ -z "$(grep -iRI 'exit 0' /etc/rc.local)" ]; then
 fi
 
 iptables-save | grep '/32 -j REJECT' | awk '{print $4}' | sort | uniq >> /etc/ipset/blacklist_auth.txt
-sort -u /etc/ipset/blacklist_auth.txt > /etc/ipset/blacklist_auth2.txt
+awk 'NF && !seen[$0]++' /etc/ipset/blacklist_auth.txt > /etc/ipset/blacklist_auth2.txt
 rm /etc/ipset/blacklist_auth.txt
 mv /etc/ipset/blacklist_auth2.txt /etc/ipset/blacklist_auth.txt
 
