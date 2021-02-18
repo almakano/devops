@@ -1,0 +1,10 @@
+/home/*/web/*/logs/*.log 
+{
+    rotate 62
+    daily
+    missingok
+    dateext
+    copytruncate
+    notifempty
+    compress
+}
