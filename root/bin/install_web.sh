@@ -46,6 +46,16 @@ echo "CREATE USER '$1'@'%' IDENTIFIED BY '$1'; GRANT ALL PRIVILEGES ON *.* TO '$
 
 echo "Install exim4"
 apt install -y exim4 bsd-mailx
+mkdir -p /etc/exim4/dkim/
+openssl genrsa -out /etc/exim4/dkim/default.key 2048
+openssl rsa -in /etc/exim4/dkim/default.key -pubout > /etc/exim4/dkim/default.pem
+echo "DKIM_KEY_FILE = /etc/exim4/dkim/default.key
+DKIM_PRIVATE_KEY = ${if exists{DKIM_KEY_FILE}{DKIM_KEY_FILE}{0}}
+DKIM_SELECTOR = mail" > /etc/exim4/exim4.conf.template2
+cat /etc/exim4/exim4.conf.template >> /etc/exim4/exim4.conf.template2
+rm /etc/exim4/exim4.conf.template
+mv /etc/exim4/exim4.conf.template2 /etc/exim4/exim4.conf.template
+
 dpkg-reconfigure exim4-config
 
 echo "Install nodejs npm"
