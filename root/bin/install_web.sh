@@ -54,6 +54,6 @@ apt install -y npm
 
 echo "Install certbot"
 add-apt-repository ppa:certbot/certbot; apt update
-apt install -y certbot python-certbot-nginx
+apt install -y certbot
 
 exit 0;
