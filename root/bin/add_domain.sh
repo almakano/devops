@@ -20,18 +20,18 @@ mkdir -p "/home/$user/web/$domain/backup"
 echo "Copying nginx apache config files"
 cp /etc/nginx/defaults/server.conf "/home/$user/web/$domain/conf/nginx.conf"
 cp /etc/apache2/defaults/server.conf "/home/$user/web/$domain/conf/apache.conf"
-sed -i "s/DOMAINNAME/$domain/" "/home/$user/web/$domain/conf/nginx.conf"
-sed -i "s/USERNAME/$user/" "/home/$user/web/$domain/conf/nginx.conf"
-sed -i "s/DOMAINNAME/$domain/" "/home/$user/web/$domain/conf/apache.conf"
-sed -i "s/USERNAME/$user/" "/home/$user/web/$domain/conf/apache.conf"
+sed -i "s/DOMAINNAME/$domain/g" "/home/$user/web/$domain/conf/nginx.conf"
+sed -i "s/USERNAME/$user/g" "/home/$user/web/$domain/conf/nginx.conf"
+sed -i "s/DOMAINNAME/$domain/g" "/home/$user/web/$domain/conf/apache.conf"
+sed -i "s/USERNAME/$user/g" "/home/$user/web/$domain/conf/apache.conf"
 
 echo "Creating ssl certificate"
 certbot certonly --agree-tos --webroot -w /var/www/html -d $domain
 ln -s /etc/letsencrypt/live/$domain/privkey.pem "/home/$user/web/$domain/conf/ssl/${domain}.key"
 ln -s /etc/letsencrypt/live/$domain/fullchain.pem "/home/$user/web/$domain/conf/ssl/${domain}.pem"
 
-sed -i "s/#	ssl/	ssl/" "/home/$user/web/$domain/conf/nginx.conf"
-sed -i "s/#	listen/	listen/" "/home/$user/web/$domain/conf/nginx.conf"
+sed -i "s/#	ssl/	ssl/g" "/home/$user/web/$domain/conf/nginx.conf"
+sed -i "s/#	listen/	listen/g" "/home/$user/web/$domain/conf/nginx.conf"
 
 echo "Restarting nginx"
 service nginx restart
