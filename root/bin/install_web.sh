@@ -9,7 +9,7 @@ dpkg-reconfigure tzdata
 
 echo "Install console benefits"
 apt install -y curl wget gcc g++ git make bash-completion net-tools htop ngrep tcpdump mtr ipset easy-rsa mc rsync lm-sensors
-apt instal -y gnupg2 ca-certificates lsb-release python-software-properties
+apt instal -y gnupg2 ca-certificates lsb-release python-software-properties zip
 
 echo "Set console colors"
 sed -i '/PS1/d' /root/.bash_profile
