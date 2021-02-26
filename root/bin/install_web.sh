@@ -6,7 +6,8 @@ if [[ -z "$1" ]]; then
 fi
 
 echo "Install console benefits"
-apt install -y curl wget gcc g++ make bash-completion net-tools htop ngrep tcpdump mtr ipset easy-rsa git mc rsync lm-sensors libmemcached-dev gnupg2 ca-certificates lsb-release python-software-properties
+apt install -y curl wget gcc g++ git make bash-completion net-tools htop ngrep tcpdump mtr ipset easy-rsa mc rsync lm-sensors
+apt instal -y gnupg2 ca-certificates lsb-release python-software-properties
 
 echo "Set console colors"
 sed -i '/PS1/d' /root/.bash_profile
@@ -17,6 +18,18 @@ if [[ -z $(grep 'EDITOR=mcedit' /root/.bash_profile) ]]; then
 	echo "export LS_OPTIONS='--color=auto -h'" >> /root/.bash_profile
 fi
 
+echo "Install php7.4"
+add-apt-repository ppa:ondrej/php; apt update;
+apt install -y php7.4 php7.4-fpm php7.4-mbstring php7.4-curl php7.4-mysql php7.4-opcache php7.4-gd php7.4-imagick php7.4-xml php7.4-zip
+
+echo "Install apache"
+apt install -y apache2 libapache2-mpm-itk libapache2-mod-ruid2 libapache2-mod-rpaf libapache2-mod-php8.0 libapache2-mod-php7.4
+a2enmod -q alias; a2enmod -q actions; a2enmod -q cgi; a2enmod -q mpm_prefork; a2enmod -q remote_ip; a2enmod -q rewrite; a2enmod -q ruid2; a2enmod -q setenvif; a2enmod -q vhost_alias; 
+a2dismod -q ssl
+wget https://raw.githubusercontent.com/almakano/devops/main/etc/apache2/apache2.conf -O /etc/apache2/apache2.conf
+if [ -f /etc/apache2/ports.conf ]; then rm /etc/apache2/ports.conf; fi
+service apache2 restart
+
 echo "Install nginx"
 echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list; apt update; apt install -y nginx
 if [[ -z $(grep 'web' /etc/nginx/nginx.conf) ]]; then 
@@ -24,14 +37,8 @@ if [[ -z $(grep 'web' /etc/nginx/nginx.conf) ]]; then
 	echo "include /home/*/web/*/conf/nginx*.conf;" >> /etc/nginx/nginx.conf;
 fi
 
-echo "Install apache"
-apt install -y apache2
-
-echo "Install php7.4"
-add-apt-repository ppa:ondrej/php; apt update; apt install -y php7.4 php7.4-fpm php7.4-mbstring php7.4-curl composer
-
 echo "Install mysql memcached"
-apt install -y mysql-server-5.7 memcached
+apt install -y mysql-server-8.0 memcached libmemcached-dev
 echo "Add mysql user $1"
 echo "GRANT ALL PRIVILEGES ON *.* TO '$1'@'%' IDENTIFIED BY '$1' WITH GRANT OPTION; flush privileges;" | mysql 
 
