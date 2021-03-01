@@ -11,8 +11,6 @@ if [ ! -f /etc/rc.local ]; then
     chmod 755 /etc/rc.local
 fi
 
-wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/update.sh -O /etc/ipset/update.sh
-
 if [ -z "$(grep -iRI 'ipset restore' /etc/rc.local)" ]; then 
     echo "ipset restore -! < /etc/ipset/rules" >> /etc/rc.local
 fi
@@ -23,17 +21,10 @@ if [ -z "$(grep -iRI 'exit 0' /etc/rc.local)" ]; then
     echo "exit 0" >> /etc/rc.local
 fi
 
-iptables-save | grep '/32 -j REJECT' | awk '{print $4}' | sort | uniq >> /etc/ipset/blacklist_auth.txt
-awk 'NF && !seen[$0]++' /etc/ipset/blacklist_auth.txt > /etc/ipset/blacklist_auth2.txt
-rm /etc/ipset/blacklist_auth.txt
-mv /etc/ipset/blacklist_auth2.txt /etc/ipset/blacklist_auth.txt
+wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/update.sh -O /etc/ipset/update.sh
+chmod 0755 /etc/ipset/update.sh
+/etc/ipset/update.sh
 
-echo "create whitelist_ip4 hash:net family inet hashsize 4096 maxelem 800000" > /etc/ipset/rules
-sed 's/^/add whitelist_ip4 /' /etc/ipset/whitelist*.txt >> /etc/ipset/rules
-echo "create blacklist_ip4 hash:net family inet hashsize 4096 maxelem 800000" >> /etc/ipset/rules
-sed 's/^/add blacklist_ip4 /' /etc/ipset/blacklist*.txt >> /etc/ipset/rules
-
-ipset -! restore < /etc/ipset/rules
 iptables-restore < /etc/iptables/rules
 
 if [ -z "$(grep -iRI 'whitelist_ip4' /etc/iptables/rules)" ]; then 
