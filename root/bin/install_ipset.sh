@@ -11,6 +11,8 @@ if [ ! -f /etc/rc.local ]; then
     chmod 755 /etc/rc.local
 fi
 
+wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/update.sh -O /etc/ipset/update.sh
+
 if [ -z "$(grep -iRI 'ipset restore' /etc/rc.local)" ]; then 
     echo "ipset restore -! < /etc/ipset/rules" >> /etc/rc.local
 fi
