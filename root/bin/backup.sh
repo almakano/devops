@@ -8,7 +8,7 @@ fi
 user="$1"
 database="$2"
 domain="$3"
-backupdir="/home/$user/backups/domain/"
+backupdir="/home/$user/backups/$domain/`date +%Y%m%d-%H%M%S`"
 
 mkdir -p "$backupdir"
 mysqldump --routines --triggers --events --skip-comments --skip-disable-keys --no-create-db -u $user -p $database | gzip > "$backupdir/$domain.sql.gz"
