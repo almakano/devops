@@ -35,6 +35,8 @@ sed -i "s/#	listen/	listen/g" "/home/$user/web/$domain/conf/nginx.conf"
 
 echo "Restarting nginx"
 service nginx restart
+echo "Restarting apache"
+service apache2 restart
 
 echo "<?php echo '$domain' ?>" > "/home/$user/web/$domain/public_html/index.php"
 
