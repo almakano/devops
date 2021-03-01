@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "PRE-RECEIVE..."
+cd ..
+GIT_DIR='.git'
+git stash save
