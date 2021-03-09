@@ -67,4 +67,10 @@ echo "Install certbot"
 add-apt-repository ppa:certbot/certbot; apt update
 apt install -y certbot
 
+echo "Install composer"
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+mv composer.phar /usr/local/bin/composer
+
 exit 0;
