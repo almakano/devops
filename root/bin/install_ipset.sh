@@ -21,6 +21,8 @@ if [ -z "$(grep -iRI 'exit 0' /etc/rc.local)" ]; then
     echo "exit 0" >> /etc/rc.local
 fi
 
+wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/blacklist_auth.txt -O /etc/ipset/blacklist_auth.txt
+wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/whitelist_me.txt -O /etc/ipset/whitelist_me.txt
 wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/update.sh -O /etc/ipset/update.sh
 chmod 0755 /etc/ipset/update.sh
 /etc/ipset/update.sh
