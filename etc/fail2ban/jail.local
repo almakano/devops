@@ -1,0 +1,10 @@
+[DEFAULT]
+bantime  = -1
+
+[sshd]
+enabled  = true
+port = 22
+
+[mysqld-auth]
+enabled  = true
+logpath  = /var/log/mysql/error.log
