@@ -29,6 +29,7 @@ wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/whitelist_
 wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/update.sh -O /etc/ipset/update.sh
 chmod 0755 /etc/ipset/update.sh
 /etc/ipset/update.sh
+(crontab -l 2>/dev/null; echo "*/30 * * * * /etc/ipset/update.sh") | crontab -
 
 iptables-restore < /etc/iptables/rules
 
