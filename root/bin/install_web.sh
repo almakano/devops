@@ -68,6 +68,7 @@ apt install -y npm
 echo "Install certbot"
 add-apt-repository ppa:certbot/certbot; apt update
 apt install -y certbot
+(crontab -l 2>/dev/null; echo "0 0 * * * /usr/bin/certbot renew") | crontab -
 
 echo "Install composer"
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
