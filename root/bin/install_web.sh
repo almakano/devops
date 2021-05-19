@@ -35,6 +35,8 @@ service apache2 restart
 
 echo "Install nginx"
 echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list; apt update; apt install -y nginx
+curl -o /etc/apt/trusted.gpg.d/nginx_signing.asc https://nginx.org/keys/nginx_signing.key
+
 if [[ -z $(grep 'web' /etc/nginx/nginx.conf) ]]; then 
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 	echo "include /home/*/web/*/conf/nginx*.conf;" >> /etc/nginx/nginx.conf;
