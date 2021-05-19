@@ -27,7 +27,7 @@ apt install -y php7.4 php7.4-fpm php7.4-mbstring php7.4-curl php7.4-mysql php7.4
 
 echo "Install apache"
 apt install -y apache2 libapache2-mpm-itk libapache2-mod-ruid2 libapache2-mod-rpaf libapache2-mod-php7.4
-a2enmod -q alias; a2enmod -q actions; a2enmod -q cgi; a2enmod -q mpm_prefork; a2enmod -q remote_ip; a2enmod -q rewrite; a2enmod -q ruid2; a2enmod -q setenvif; a2enmod -q vhost_alias; 
+a2enmod -q alias; a2enmod -q actions; a2enmod -q cgi; a2enmod -q mpm_prefork; a2enmod -q remote_ip; a2enmod -q rewrite; a2enmod -q setenvif; a2enmod -q vhost_alias; 
 a2dismod -q ssl
 wget https://raw.githubusercontent.com/almakano/devops/main/etc/apache2/apache2.conf -O /etc/apache2/apache2.conf
 if [ -f /etc/apache2/ports.conf ]; then rm /etc/apache2/ports.conf; fi
