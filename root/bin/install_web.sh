@@ -7,7 +7,7 @@ fi
 
 echo "Install console benefits"
 apt install -y curl wget gcc g++ git make bash-completion net-tools htop ngrep tcpdump mtr ipset easy-rsa mc rsync lm-sensors
-apt install -y gnupg2 ca-certificates lsb-release python-software-properties zip language-pack-ru
+apt install -y gnupg2 ca-certificates lsb-release software-properties-common python-software-properties zip language-pack-ru
 
 dpkg-reconfigure tzdata
 dpkg-reconfigure locales
