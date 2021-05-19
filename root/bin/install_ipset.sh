@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$(dpkg -l | grep 'ipset')" ]; then 
-    apt install ipset iptables-persistent
+    apt install ipset iptables-persistent fail2ban
 fi
 
 if [ ! -d /etc/ipset ]; then mkdir /etc/ipset; fi
@@ -20,6 +20,9 @@ fi
 if [ -z "$(grep -iRI 'exit 0' /etc/rc.local)" ]; then 
     echo "exit 0" >> /etc/rc.local
 fi
+
+wget https://raw.githubusercontent.com/almakano/devops/main/etc/fail2ban/jail.local -O /etc/fail2ban/jail.local
+service fail2ban restart
 
 wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/blacklist_auth.txt -O /etc/ipset/blacklist_auth.txt
 wget https://raw.githubusercontent.com/almakano/devops/main/etc/ipset/whitelist_me.txt -O /etc/ipset/whitelist_me.txt
