@@ -5,8 +5,8 @@ iptables-restore < /etc/iptables/rules
 cat /etc/ipset/blacklist_auth.txt | sort | uniq > /etc/ipset/blacklist_auth2.txt
 rm /etc/ipset/blacklist_auth.txt; mv /etc/ipset/blacklist_auth2.txt /etc/ipset/blacklist_auth.txt
 
-zcat /home/*/w*/*/logs/*nginx*.log*.gz | grep -E '(0x%5B%5D=|wp-admin|wp-config|\.env)' | grep -vE '" (200|301|302) ' | awk '{print $2}' | grep -vE '([a-zа-я]|127.0.0.1)' | sort | uniq >> /etc/ipset/blacklist_web.txt;
-cat /home/*/w*/*/logs/*nginx*.log | grep -E '(0x%5B%5D=|wp-admin|wp-config|\.env)' | grep -vE '" (200|301|302) ' | awk '{print $2}' | grep -vE '([a-zа-я]|127.0.0.1)' | sort | uniq >> /etc/ipset/blacklist_web.txt;
+zcat /home/*/w*/*/logs/*nginx*.log*.gz | grep -E '(0x%5B%5D=|wp-admin|wp-config|wp-login|\.env)' | grep -vE '" (200|301|302) ' | awk '{print $2}' | grep -vE '([a-zа-я]|127.0.0.1)' | sort | uniq >> /etc/ipset/blacklist_web.txt;
+cat /home/*/w*/*/logs/*nginx*.log | grep -E '(0x%5B%5D=|wp-admin|wp-config|wp-login|\.env)' | grep -vE '" (200|301|302) ' | awk '{print $2}' | grep -vE '([a-zа-я]|127.0.0.1)' | sort | uniq >> /etc/ipset/blacklist_web.txt;
 cat /etc/ipset/blacklist_web.txt | sort | uniq >> /etc/ipset/blacklist_web2.txt
 rm /etc/ipset/blacklist_web.txt; mv /etc/ipset/blacklist_web2.txt /etc/ipset/blacklist_web.txt
 
