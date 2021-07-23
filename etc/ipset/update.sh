@@ -1,9 +1,8 @@
 #!/bin/bash
 
-iptables-save | grep '/32 -j REJECT' | awk '{print $4}' | sort | uniq >> /etc/ipset/blacklist_auth.txt
+echo "$(iptables-save | grep '/32 -j REJECT' | awk '{print $4}'; cat /etc/ipset/blacklist_auth.txt | sort | uniq)" > /etc/ipset/blacklist_auth.txt
+fail2ban-client unban --all
 iptables-restore < /etc/iptables/rules
-cat /etc/ipset/blacklist_auth.txt | sort | uniq > /etc/ipset/blacklist_auth2.txt
-rm /etc/ipset/blacklist_auth.txt; mv /etc/ipset/blacklist_auth2.txt /etc/ipset/blacklist_auth.txt
 
 searchpattern="(0x%5B%5D=|wp-admin|wp-config|wp-login|wp-content|wp-includes|wp-json|archive.zip|\.env|\.svn|\.git|phpinfo\.php|config\.inc\.php)"
 
